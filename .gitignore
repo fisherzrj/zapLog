@@ -13,3 +13,11 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# 临时文件和工具配置文件
+.DS_Store
+.idea
+.vscode
+
+# 保持空目录提交
+!.gitkeep
