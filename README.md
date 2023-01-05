@@ -3,7 +3,7 @@
 package main
 
 import (
-	"github.com/fisherzrj/zaplog"
+	log "github.com/fisherzrj/zaplog"
 )
 
 func main() {
