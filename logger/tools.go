@@ -40,7 +40,7 @@ func getLevel(level string) zapcore.Level {
 	return zapcore.InfoLevel
 }
 
-// getEncoderConfig 获取编码器
+// getEncoderConfig 获取编码器配置
 func getEncoderConfig() zapcore.EncoderConfig {
 	encoderConfig := zap.NewProductionEncoderConfig()
 
