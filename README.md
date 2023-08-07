@@ -16,8 +16,8 @@ func main() {
 	// 应用当前配置
 	log.ApplyConfig()
 
-    log.Info("新日志")
-    log.Infof("格式化的日志: %s", "zaplog")
+	log.Info("新日志")
+	log.Infof("格式化的日志: %s", "zaplog")
 }
 ```
 
@@ -30,10 +30,10 @@ import (
 )
 
 func main() {
-    log := logger.New()
+	log := logger.New()
 
-    // 设置新logger名称，多个logger时可设置用来区分
-    log.Config.SetLoggerName("newzaplog")
+	// 设置新logger名称，多个logger时可设置用来区分
+	log.Config.SetLoggerName("newzaplog")
 
 	// 输出到日志文件
 	log.Config.EnableFileOut("./zaplog.log")
@@ -44,7 +44,7 @@ func main() {
 	// 应用当前配置
 	log.ApplyConfig()
 
-    log.Info("新日志")
-    log.Infof("格式化的日志: %s", "zaplog")
+	log.Info("新日志")
+	log.Infof("格式化的日志: %s", "zaplog")
 }
 ```
