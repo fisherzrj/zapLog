@@ -16,16 +16,20 @@ limitations under the License.
 
 package logger
 
+import "fmt"
+
 // Config log配置文件
 type Config struct {
-	logLevel        string   // 日志记录级别
-	stacktraceLevel string   // 记录堆栈的级别
-	loggerName      string   // logger名称
-	callerSkip      int      // CallerSkip次数
-	jsonFormat      bool     // 输出json格式
-	consoleOut      bool     // 是否输出到console
-	consoleLevel    string   // 控制台日志记录级别
-	fileOut         *fileOut // 日志文件输出
+	logLevel        string    // 日志记录级别
+	stacktraceLevel string    // 记录堆栈的级别
+	loggerName      string    // logger名称
+	callerSkip      int       // CallerSkip次数
+	jsonFormat      bool      // 输出json格式
+	consoleOut      bool      // 是否输出到console
+	consoleLevel    string    // 控制台日志记录级别
+	fileOut         *fileOut  // 日志文件输出
+	sliceOut        bool      // 是否输出到切片
+	sliceOutSlice   *[]string // 输出的切片
 }
 
 // fileOut 日志文件输出配置
@@ -48,6 +52,8 @@ func newConfig() *Config {
 		jsonFormat:      false,
 		consoleOut:      false,
 		consoleLevel:    "",
+		sliceOut:        false,
+		sliceOutSlice:   &[]string{},
 		fileOut: &fileOut{
 			enable:     false,
 			filename:   "",
@@ -107,6 +113,39 @@ func (c *Config) SetConsoleLevel(level string) {
 // SetConsoleLevel 恢复默认控制台日志级别，和 logLevel 保持一致
 func (c *Config) ClearConsoleLevel() {
 	c.consoleLevel = ""
+}
+
+// EnableSliceOut 开启输出到切片
+func (c *Config) EnableSliceOut() {
+	c.sliceOut = true
+}
+
+// DisableSliceOuts 关闭输出到切片
+func (c *Config) DisableSliceOut() {
+	c.sliceOut = false
+}
+
+// SetSliceOutSlice 设置输出日志的切片
+func (c *Config) SetSliceOutSlice(s *[]string) {
+	c.sliceOutSlice = s
+}
+
+// GetSliceOutSlice 获取输出日志的切片
+func (c *Config) GetSliceOutSlice() *[]string {
+	return c.sliceOutSlice
+}
+
+// ClearSliceOutSlice 清除切片中的日志
+func (c *Config) ClearSliceOutSlice() {
+	*c.sliceOutSlice = []string{}
+}
+
+// PrintSliceOutSlice 获取输出日志的切片
+func (c *Config) PrintSliceOutSlice() {
+	for _, s := range *c.sliceOutSlice {
+		fmt.Print(s)
+	}
+	c.ClearSliceOutSlice()
 }
 
 // EnableFileOut 开启日志文件输出

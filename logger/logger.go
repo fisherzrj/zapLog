@@ -65,6 +65,13 @@ func (l *Logger) ApplyConfig() {
 		cores = append(cores, core)
 	}
 
+	// 输出到切片
+	if conf.sliceOut {
+		writeSyncer := getSliceWriteSyncer(conf.sliceOutSlice)
+		core := zapcore.NewCore(encoder, writeSyncer, getLevel(conf.logLevel))
+		cores = append(cores, core)
+	}
+
 	// 输出到文件
 	if conf.fileOut.enable {
 		writeSyncer := getFileWriteSyncer(*conf.fileOut)
@@ -93,6 +100,11 @@ func (l *Logger) ApplyConfig() {
 	defer logger.Sync()
 
 	l.logger = logger.Sugar()
+}
+
+// PrintSliceOutSlice 打印输出到切片的日志
+func (l *Logger) PrintSliceOutSlice() {
+	l.Config.PrintSliceOutSlice()
 }
 
 // Debug

@@ -36,6 +36,11 @@ func ApplyConfig() {
 	log.ApplyConfig()
 }
 
+// PrintSliceOutSlice 打印输出到切片的日志
+func PrintSliceOutSlice() {
+	log.PrintSliceOutSlice()
+}
+
 // Debug
 func Debug(args ...interface{}) {
 	log.Debug(args...)

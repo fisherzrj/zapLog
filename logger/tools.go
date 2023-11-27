@@ -63,3 +63,20 @@ func getFileWriteSyncer(f fileOut) zapcore.WriteSyncer {
 	}
 	return zapcore.AddSync(lumberJackLogger)
 }
+
+// SliceWriter 自定义的 io.Writer，用于将日志输出保存到切片中
+type SliceWriter struct {
+	Logs *[]string
+}
+
+// Write 将日志内容写入 Logs 切片
+func (w *SliceWriter) Write(p []byte) (n int, err error) {
+	*w.Logs = append(*w.Logs, string(p))
+	return len(p), nil
+}
+
+// getSliceWriteSyncer 指定日志写入位置为切片
+func getSliceWriteSyncer(s *[]string) zapcore.WriteSyncer {
+	sliceWriteLogger := &SliceWriter{Logs: s}
+	return zapcore.AddSync(sliceWriteLogger)
+}
