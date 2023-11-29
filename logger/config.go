@@ -16,7 +16,10 @@ limitations under the License.
 
 package logger
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 // Config log配置文件
 type Config struct {
@@ -30,6 +33,7 @@ type Config struct {
 	fileOut         *fileOut  // 日志文件输出
 	sliceOut        bool      // 是否输出到切片
 	sliceOutSlice   *[]string // 输出的切片
+	output          io.Writer // 将日志写入指定输出
 }
 
 // fileOut 日志文件输出配置
@@ -54,6 +58,7 @@ func newConfig() *Config {
 		consoleLevel:    "",
 		sliceOut:        false,
 		sliceOutSlice:   &[]string{},
+		output:          nil,
 		fileOut: &fileOut{
 			enable:     false,
 			filename:   "",
@@ -182,4 +187,14 @@ func (c *Config) EnableFileOutCompress() {
 // DisableFileOutCompress 关闭压缩/归档旧文件
 func (c *Config) DisableFileOutCompress() {
 	c.fileOut.compress = false
+}
+
+// SetOutput 设置日志的输出目标
+func (c *Config) SetOutput(w io.Writer) {
+	c.output = w
+}
+
+// ClearOutput 清除设置的日志输出目标
+func (c *Config) ClearOutput() {
+	c.output = nil
 }
